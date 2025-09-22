@@ -1,0 +1,3 @@
+#Ansible vars
+#Terraform variables each user,ust have their own copy locally, may include sensitive data
+project-vars.yaml
