@@ -1,0 +1,95 @@
+---
+#As we are executing ansible from terraform we must ensure that the ssh connection is available before executing any command.
+- name: Wait for SSH connection
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: Ensuring SSH port open
+      wait_for:
+        port: 22
+        delay: 10
+        timeout: 100
+        search_regex: OpenSSH
+        host: '{{(ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+      vars:
+        ansible_connection: local
+        ansible_python_interpreter: /usr/bin/python3
+
+
+- name: Install Docker
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Installing docker
+      yum: 
+        name: docker
+        update_cache: yes
+        state: present
+
+    - name: Starting docker daemon
+      systemd:
+        name: docker
+        state: started
+
+- name: Create new Linux user
+  hosts: all
+  become: yes
+  vars_files:
+    project-vars.yaml
+  tasks:
+  - name: Creating new linux user
+  # Adming group in AWS is called adm.
+    user: 
+      name: "{{user_name}}"
+      groups: "{{user_groups}}"
+
+
+- name: Installing Docker-Compose
+  hosts: all
+  vars_files:
+    project-vars.yaml
+  become: yes
+  become_user: "{{user_name}}"
+  tasks:
+    - name: Creating docker-compose directory
+      file:
+          path: ~/.docker/cli-plugins
+          state: directory
+    - name: Getting architecture of remote machine
+      shell: uname -m
+      register: remote_arch
+    
+    - debug: msg={{remote_arch.stdout}}
+
+    - name: Installing docker-compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-{{ remote_arch.stdout }}"
+        dest: ~/.docker/cli-plugins/docker-compose
+        mode: +x
+
+
+- name: Start docker containers
+  hosts: all
+  vars_files:
+      project-vars.yaml
+  become: yes
+  become_user: "{{user_name}}"
+  tasks:
+  - name: Copying Docker-compose yaml
+    copy: 
+      src: /home/lala/DevOpsBootCamp/ansible/demo3/docker-compose-java-mysql.yaml
+      dest: /home/{{user_name}}/docker-compose.yaml
+
+  - name: Logging to DockerHub registry
+    #Default is DockerHub
+    docker_login:
+      username: lala.la.flaca11@gmail.com
+      password: "{{password_docker_hub}}"
+
+  - name: Starting Docker Compose
+    community.docker.docker_compose_v2:
+      project_src: /home/{{user_name}}
+      #Equivalent to docker compose up
+      #State absent: docker compose down
+      state: present

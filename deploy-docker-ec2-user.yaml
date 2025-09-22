@@ -1,0 +1,75 @@
+---
+- name: Install Docker
+  hosts: AWS_EC2_Docker_Server
+  become: yes
+  become_user: root
+  tasks:
+    - name: Installing docker
+      yum: 
+        name: docker
+        update_cache: yes
+        state: present
+
+    - name: Starting docker daemon
+      systemd:
+        name: docker
+        state: started
+
+- name: Installing Docker-Compose
+  hosts: AWS_EC2_Docker_Server
+  tasks:
+    - name: Creating docker-compose directory
+      file:
+          path: ~/.docker/cli-plugins
+          state: directory
+    - name: Getting architecture of remote machine
+      shell: uname -m
+      register: remote_arch
+    
+    - debug: msg={{remote_arch.stdout}}
+
+    - name: Installing docker-compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-{{ remote_arch.stdout }}"
+        dest: ~/.docker/cli-plugins/docker-compose
+        mode: +x
+
+#Allows EC2-user to execute docker comands without sudo
+- name: Add ec2-user to Docker group
+  hosts: AWS_EC2_Docker_Server
+  become: yes
+  tasks:
+  - name: Adding ec2-user to docker group
+    user: 
+      name: ec2-user
+      group: docker
+      append: yes
+  # To consider the last change (ec2 user to the group) the connection must be reset to take effect.
+  #In ansible we can reset the connection the the remote machine using the meta module as follows:
+  - name: Resetting Remote Connection
+    meta: reset_connection
+
+- name: Start docker containers
+  hosts: AWS_EC2_Docker_Server
+  vars_files:
+      project-vars.yaml
+  tasks:
+  - name: Copying Docker-compose yaml
+    copy: 
+      src: /home/lala/DevOpsBootCamp/ansible/demo3/docker-compose-java-mysql.yaml
+      dest: /home/ec2-user/docker-compose.yaml
+
+  - name: Logging to DockerHub registry
+    #Default is DockerHub
+    docker_login:
+      username: lala.la.flaca11@gmail.com
+      password: "{{password_docker_hub}}"
+
+  - name: Starting Docker Compose
+    community.docker.docker_compose_v2:
+      project_src: /home/ec2-user
+      #Equivalent to docker compose up
+      #State absent: docker compose down
+      state: present
+
+

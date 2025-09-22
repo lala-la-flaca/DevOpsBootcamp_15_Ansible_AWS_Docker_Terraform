@@ -1,0 +1,80 @@
+---
+- name: Install Docker
+  hosts: AWS_EC2_Docker_Server
+  become: yes
+  become_user: root
+  tasks:
+    - name: Installing docker
+      yum: 
+        name: docker
+        update_cache: yes
+        state: present
+
+    - name: Starting docker daemon
+      systemd:
+        name: docker
+        state: started
+
+- name: Create new Linux user
+  hosts: AWS_EC2_Docker_Server
+  become: yes
+  vars_files:
+    project-vars.yaml
+  tasks:
+  - name: Creating new linux user
+  # Adming group in AWS is called adm.
+    user: 
+      name: "{{user_name}}"
+      groups: "{{user_groups}}"
+
+
+- name: Installing Docker-Compose
+  hosts: AWS_EC2_Docker_Server
+  vars_files:
+    project-vars.yaml
+  become: yes
+  become_user: "{{user_name}}"
+  tasks:
+    - name: Creating docker-compose directory
+      file:
+          path: ~/.docker/cli-plugins
+          state: directory
+    - name: Getting architecture of remote machine
+      shell: uname -m
+      register: remote_arch
+    
+    - debug: msg={{remote_arch.stdout}}
+
+    - name: Installing docker-compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-{{ remote_arch.stdout }}"
+        dest: ~/.docker/cli-plugins/docker-compose
+        mode: +x
+
+
+- name: Start docker containers
+  hosts: AWS_EC2_Docker_Server
+  vars_files:
+      project-vars.yaml
+  become: yes
+  become_user: "{{user_name}}"
+  tasks:
+  - name: Copying Docker-compose yaml
+    copy: 
+      src: /home/lala/DevOpsBootCamp/ansible/demo3/docker-compose-java-mysql.yaml
+      dest: /home/{{user_name}}/docker-compose.yaml
+
+  - name: Logging to DockerHub registry
+    #Default is DockerHub
+    docker_login:
+      username: lala.la.flaca11@gmail.com
+      password: "{{password_docker_hub}}"
+
+  - name: Starting Docker Compose
+    community.docker.docker_compose_v2:
+      project_src: /home/{{user_name}}
+      #Equivalent to docker compose up
+      #State absent: docker compose down
+      state: present
+
+
