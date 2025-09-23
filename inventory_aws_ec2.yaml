@@ -1,0 +1,6 @@
+---
+#plugin configuration file
+plugin: aws_ec2
+inventory:
+  - eu-central-1
+  
