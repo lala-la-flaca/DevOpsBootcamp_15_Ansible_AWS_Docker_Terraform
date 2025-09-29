@@ -1,7 +1,7 @@
 ---
 #As we are executing ansible from terraform we must ensure that the ssh connection is available before executing any command.
 - name: Wait for SSH connection
-  hosts: all
+  hosts: aws_ec2
   gather_facts: False
   tasks:
     - name: Ensuring SSH port open
@@ -17,7 +17,7 @@
 
 
 - name: Install Docker
-  hosts: all
+  hosts: aws_ec2
   become: yes
   become_user: root
   tasks:
@@ -33,7 +33,7 @@
         state: started
 
 - name: Create new Linux user
-  hosts: all
+  hosts: aws_ec2
   become: yes
   vars_files:
     project-vars.yaml
@@ -46,7 +46,7 @@
 
 
 - name: Installing Docker-Compose
-  hosts: all
+  hosts: aws_ec2
   vars_files:
     project-vars.yaml
   become: yes
@@ -70,7 +70,7 @@
 
 
 - name: Start docker containers
-  hosts: all
+  hosts: aws_ec2
   vars_files:
       project-vars.yaml
   become: yes
