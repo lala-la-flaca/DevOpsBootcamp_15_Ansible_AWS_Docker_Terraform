@@ -20,9 +20,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 * Linux: OS.
 
 # 🎯 Features
-  ✅ Provisions EC2 instances using Terraform
-  🐳 Installs Docker & Docker Compose via Ansible.
-  🧩 Deploy nginx application from a compose file.
+- ✅ Provisions EC2 instances using Terraform
+- 🐳 Installs Docker & Docker Compose via Ansible.
+- 🧩 Deploy nginx application from a compose file.
 
 # Prerequisites
 * AWS account with valid keys.
