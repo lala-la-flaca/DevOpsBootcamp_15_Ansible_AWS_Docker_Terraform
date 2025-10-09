@@ -26,11 +26,14 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 
 # Prerequisites
 * AWS account with valid keys.
-* Terraform demo to deploy infrastructure.
+* Terraform demo to deploy infrastructure. The Terraform files are available at:
+  [demo/ansible-terraform](https://gitlab.com/devopsbootcamp4095512/devopsbootcamp_12_terraform_aws/-/tree/demo/ansible-terraform?ref_type=heads)
   
 # 🏗 Project Architecture
 
 # ⚙️ Project Configuration
+
+
 
 ---
 <a id="demo4"></a>
