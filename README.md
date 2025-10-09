@@ -9,7 +9,7 @@ This exercise is part of Module 15 from the TWN DevOps Bootcamp. In Module 15, w
 
 ---
 <a id="demo3"></a>
-# 📦Demo 3 – Ansible & Docker
+## 📦Demo 3 – Ansible & Docker
 # 📌 Objective
 Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instances.
 
@@ -34,7 +34,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 
 ---
 <a id="demo4"></a>
-# 📦Demo 4 – Ansible Integration in Terraform
+## 📦Demo 4 – Ansible Integration in Terraform
 # 📌 Objective
   Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning
   
