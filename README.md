@@ -119,8 +119,8 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
               name: ec2-user
               group: docker
               append: yes
-          # To consider the last change (ec2 user to the group) the connection must be reset to take effect.
-          #In Ansible we can reset the connection the the remote machine using the meta module as follows:
+         
+          #In Ansible, we can reset the connection using the meta module as follows:
           - name: Resetting Remote Connection
             meta: reset_connection 
     ```
