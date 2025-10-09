@@ -60,18 +60,19 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
       become: yes
       become_user: root
       tasks:
-        - name: Installing docker
+        - name: Installing Docker
           yum: 
             name: docker
             update_cache: yes
             state: present
     
-        - name: Starting docker daemon
+        - name: Starting Docker daemon
           systemd:
             name: docker
             state: started
    ```
 7. Create a second play to install Docker-Compose.
+   
    <details><summary><strong>Architecture of the Machine</strong></summary>
      uname: a command-line utility that prints basic information about the OS and hardware. This command runs as a shell command and passes the output to URL and obtain the latest linux version of the docker compose<br>
      uname -s: Prints the name of OS Ex. Linux<br>
@@ -79,6 +80,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
      These commands are used to dynamically build the URL that retrieves the latest Linux version of Docker Compose.
      The output of uname -m is stored in the remote_arch variable and passed to the URL.
    </details>
+   
    ```bash
      - name: Installing Docker-Compose
       hosts: AWS_EC2_Docker_Server
@@ -101,9 +103,11 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    ```
     
  10. Create a fourth play to add the EC2-user to the Docker group.
+     
     <details><summary><strong>Reset connection</strong></summary>
       After adding the user to the Docker group, reset the connection so the changes take effect.
     </details>
+    
     ```bash
         #Allows EC2-user to execute docker comands without sudo
         - name: Add ec2-user to Docker group
