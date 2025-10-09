@@ -52,7 +52,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
     [AWS_EC2_Docker_Server]
     3.89.217.238 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=ec2-user
    ```
-5. Create the first play to install Docker.
+4. Create the first play to install Docker.
    ```bash
     ---
     - name: Install Docker
@@ -71,7 +71,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             name: docker
             state: started
    ```
-7. Create a second play to install Docker-Compose.
+5. Create a second play to install Docker-Compose.
    
    <details><summary><strong>Architecture of the Machine</strong></summary>
      uname: a command-line utility that prints basic information about the OS and hardware. This command runs as a shell command and passes the output to URL and obtain the latest linux version of the docker compose<br>
@@ -102,8 +102,8 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             mode: +x
    ```
     
- 10. Create a fourth play to add the EC2-user to the Docker group.
-     
+ 6. Create a fourth play to add the EC2-user to the Docker group.
+
     <details><summary><strong>Reset connection</strong></summary>
       After adding the user to the Docker group, reset the connection so the changes take effect.
     </details>
@@ -126,6 +126,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
     ```
  
  12. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
+
      ```bash
        - name: Start docker containers
         hosts: AWS_EC2_Docker_Server
