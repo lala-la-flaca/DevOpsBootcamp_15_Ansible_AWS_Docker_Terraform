@@ -45,25 +45,25 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 4. Check the Amazon console and verify that EC2s are running.
    
 ## Ansible to configure EC2
-1. Copy the IP address from the EC2 server
-2. Switch to the Ansible project.
-3. Create the hosts file and add the IP address of the EC2.
+1. Copy the IP address from the EC2 instance.
+2. Switch to the Ansible project directory.
+3. Create a hosts file and add the EC2 IP address.
 4. Create the first play to install Docker.
 5. Create a second play to install Docker-Compose.
    <details><summary><strong>Architecture of the Machine</strong></summary>
      uname: a command-line utility that prints basic information about the OS and hardware. This command runs as a shell command and passes the output to URL and obtain the latest linux version of the docker compose<br>
-     uname -s: Linux <br>
-     uname -m: x86_64 <br>
-     The commands are encapsulated in the URL, the output of the uname-m is saved in the remote_arch variable, and passed to the URL.
+     uname -s: Prints the name of OS Ex. Linux<br>
+     uname -m: Prints the architecture of the system, Ex. x86_64 <br>
+     These commands are used to dynamically build the URL that retrieves the latest Linux version of Docker Compose.
+     The output of uname -m is stored in the remote_arch variable and passed to the URL.
    </details>
- 6. Create a third play to start Docker.
+ 6. Create a third play to start Docker service.
  7. Create a fourth play to add the EC2-user to the Docker group.
     <details><summary><strong>Reset connection</strong></summary>
-    After adding the user to the group, we must reset the connection so the changes are taken into account.
-  </details>
+      After adding the user to the Docker group, reset the connection so the changes take effect.
+    </details>
  
- 9. Create a fifth play to start Docker containers
-[Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
+ 9. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
 10. Run the Ansible playbook.
     ```bash
     ansible-playbook 
