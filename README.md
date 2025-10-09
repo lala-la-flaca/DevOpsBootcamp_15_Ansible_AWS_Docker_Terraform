@@ -2,14 +2,14 @@
 This exercise is part of Module 15 from the TWN DevOps Bootcamp. In Module 15, we focus on automating server setup and application deployment using Ansible. You learn how to configure servers, deploy Node.js and Nexus, integrate with Terraform and Jenkins, manage Docker containers, and organize playbooks with roles. Each demo builds practical automation skills for real-world DevOps environments.
 
 <p align="center">
-  <a href="#demo-3">⚙️ Demo 3</a> ·
-  <a href="#demo-4">🚀 Demo 4</a> ·
+  <a href="#demo3">⚙️ Demo 3</a> ·
+  <a href="#demo4">🚀 Demo 4</a> ·
   <a href="#faq">❓ FAQ</a>
 </p>
 
 ---
 <a id="demo3"></a>
-## 📦Demo 3 – Ansible & Docker
+# 📦Demo 3 – Ansible & Docker
 # 📌 Objective
 Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instances.
 
