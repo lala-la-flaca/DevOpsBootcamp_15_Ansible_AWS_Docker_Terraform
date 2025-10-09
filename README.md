@@ -39,9 +39,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
   Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning
   
 # 🎯 Features
-  ✅ End-to-end automation of infrastructure + configuration.
-  🐳 Terraform executes Ansible after creating servers
-  ☁️ Consistent server setup on every provision
+✅ End-to-end automation of infrastructure + configuration.  
+🐳 Terraform executes Ansible after creating servers.  
+☁️ Consistent server setup on every provision.  
   
 # ⚙️ Project Configuration
 1. Using Terraform infrastructure from the Terraform module.
