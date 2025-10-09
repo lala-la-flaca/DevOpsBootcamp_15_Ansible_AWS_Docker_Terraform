@@ -20,9 +20,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 * Linux: OS.
 
 # 🎯 Features
-✅ Provisions EC2 instances using Terraform.<br>
-🐳 Installs Docker & Docker Compose via Ansible.<br>
-🧩 Deploy nginx application from a compose file.<br>
+  ✅ Provisions EC2 instances using Terraform.<br>
+  🐳 Installs Docker & Docker Compose via Ansible.<br>
+  🧩 Deploy nginx application from a compose file.<br>
 
 # Prerequisites
 * AWS account with valid keys.
@@ -39,10 +39,10 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
   Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning
   
 # 🎯 Features
-✅ End-to-end automation of infrastructure + configuration.  
-🐳 Terraform executes Ansible after creating servers.  
-☁️ Consistent server setup on every provision.  
-  
+  ✅ End-to-end automation of infrastructure + configuration.<br>
+  🐳 Terraform executes Ansible after creating servers.<br>
+  ☁️ Consistent server setup on every provision.<br>
+    
 # ⚙️ Project Configuration
 1. Using Terraform infrastructure from the Terraform module.
 2. Add null_resource with provisioner "local-exec" to run Ansible.
