@@ -34,7 +34,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 
 ---
 <a id="demo4"></a>
-## 📦Demo 4 – Ansible Integration in Terraform
+# 📦Demo 4 – Ansible Integration in Terraform
 # 📌 Objective
   Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning
   
