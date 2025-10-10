@@ -40,16 +40,17 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    ```bash
    terraform init
    ```
+  < img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/1%20create%20infrastructur%20eusing%20terraform.PNG" width=800 />
   
 3. Deploy AWS infrastructure using Terraform
    
    ```bash
-   terraform apply --auto-approve
+     terraform apply --auto-approve
    ```
    
 4. Check the Amazon console and verify that EC2s are running.
    
-   <img src="" width=800/>
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/2%20server%20ec2%20up.PNG" width=800/>
 
    
 ## Ansible to configure EC2
@@ -87,7 +88,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             state: started
    ```
    
-   <img src="" width=800/>
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play1.PNG" width=800/>
    
 5. Create a second play to install Docker-Compose.
    
@@ -119,7 +120,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             dest: ~/.docker/cli-plugins/docker-compose
             mode: +x
    ```
-   <img src="" width=800/>
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play%202.png" width=800/>
     
  6. Create a fourth play to add the EC2-user to the Docker group.
 
@@ -144,7 +145,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             meta: reset_connection 
     ```
     
-    <img src="" width=800/>
+    <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play3.png" width=800/>
  
  7. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
 
@@ -172,17 +173,16 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             #State absent: docker compose down
             state: present
      ```
-     <img src="" width=800/>
+     <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play4.png" width=800/>
      
 8. Run the Ansible playbook.
     ```bash
-    ansible-playbook 
+      ansible-playbook deploy-docker-ec2-user.yaml
     ```
-    <img src="" width=800/>
 
 9. Docker configured in EC2s
     
-    <img src="" width=800/>
+    <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/docker%20compose%20up%20and%20running%20in%20ec2.png" width=800/>
     
 
 ## Making the Project Reusable
@@ -317,6 +317,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
         }
       }
    ```
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/null%20resource.PNG" width=800/>
    
 6. Switch to Ansible configuration.
    
@@ -340,9 +341,12 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             ansible_connection: local
             ansible_python_interpreter: /usr/bin/python3
    ```
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/ssh%20demo4.PNG" width=800/>
+   
 9. Switch to Terraform and apply the infrastructure.
    ```bash
      terraform init
      terraform plan
      terraform apply --auto-approve
    ```
+   < img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/running%20aws%20ec2%20server%20form%20terraform%20using%20ansible%20provisioners.PNG" width=800/>
