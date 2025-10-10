@@ -349,3 +349,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
      terraform apply --auto-approve
    ```
    <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/running%20aws%20ec2%20server%20form%20terraform%20using%20ansible%20provisioners.PNG" width=800/>
+
+10. Docker images running:
+    
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/terraform%20ansible%20aws%20deplo.png" width=800/>
