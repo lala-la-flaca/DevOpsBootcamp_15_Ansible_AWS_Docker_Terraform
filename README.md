@@ -44,7 +44,8 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 3. Deploy AWS infrastructure using Terraform
    
    ```bash
-     terraform apply --auto-approve
+   terraform plan
+   terraform apply --auto-approve
    ```
    
 4. Check the Amazon console and verify that EC2s are running.
