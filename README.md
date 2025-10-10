@@ -62,10 +62,8 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    
    ```bash
     [AWS_EC2_Docker_Server]
-    3.89.217.238 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=ec2-user
+    35.174.14.252 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=ec2-user
    ```
-   
-   <img src="" width=800/>
    
 4. Create the first play to install Docker.
    
@@ -122,7 +120,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    ```
    <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play%202.png" width=800/>
     
- 6. Create a fourth play to add the EC2-user to the Docker group.
+ 6. Create a third play to add the EC2-user to the Docker group.
 
     <details><summary><strong>Reset connection</strong></summary>
       After adding the user to the Docker group, reset the connection so the changes take effect.
@@ -147,7 +145,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
     
     <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/play3.png" width=800/>
  
- 7. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
+ 7. Create a fourth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
 
      ```bash
        - name: Start Docker containers
@@ -189,7 +187,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 1. Add a play to create a new user, instead of using the ec2-user.
    
    ```bash
-     - name: Create new Linux user
+   - name: Create new Linux user
     hosts: AWS_EC2_Docker_Server
     become: yes
     vars_files:
@@ -264,7 +262,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 # 📦Demo 4 – Ansible Integration in Terraform
 
 # 📌 Objective
-  Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning. Using the previous ansible configuration.
+  Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning. Using the previous Ansible configuration.
   
 # 🎯 Features
   ✅ End-to-end automation of infrastructure + configuration.<br>
@@ -324,6 +322,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 7. Modify the host from the docker_server group to ALL.
    
 8. Ensure that the EC2 instance is accessible.
+   
    ```bash
     #As we are executing Ansible from Terraform, we must ensure that the SSH connection is available before executing any command.
     - name: Wait for SSH connection
@@ -344,9 +343,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/ssh%20demo4.PNG" width=800/>
    
 9. Switch to Terraform and apply the infrastructure.
+
    ```bash
-     terraform init
      terraform plan
      terraform apply --auto-approve
    ```
-   < img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/running%20aws%20ec2%20server%20form%20terraform%20using%20ansible%20provisioners.PNG" width=800/>
+   <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/running%20aws%20ec2%20server%20form%20terraform%20using%20ansible%20provisioners.PNG" width=800/>
