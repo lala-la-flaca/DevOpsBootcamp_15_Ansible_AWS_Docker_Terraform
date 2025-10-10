@@ -34,25 +34,36 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 # ⚙️ Project Configuration
 ## Terraform to deploy infrastructure
 1. Use the Terraform file from the Terraform module 1 and remove the bootstrap section.
+   
 2. Initialize Terraform
+   
    ```bash
    terraform init
    ```
+  
 3. Deploy AWS infrastructure using Terraform
+   
    ```bash
    terraform apply --auto-approve
    ```
+   
 4. Check the Amazon console and verify that EC2s are running.
+   
    <img src="" width=800/>
+
    
 ## Ansible to configure EC2
 1. Copy the IP address from the EC2 instance.
+   
 2. Switch to the Ansible project directory.
+   
 3. Create a hosts file and add the EC2 IP address.
+   
    ```bash
     [AWS_EC2_Docker_Server]
     3.89.217.238 ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_user=ec2-user
    ```
+   
    <img src="" width=800/>
    
 4. Create the first play to install Docker.
@@ -75,9 +86,10 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             name: docker
             state: started
    ```
+   
    <img src="" width=800/>
    
-6. Create a second play to install Docker-Compose.
+5. Create a second play to install Docker-Compose.
    
    <details><summary><strong>Dynamic URL: uname </strong></summary>
      uname: a command-line utility that prints basic information about the OS and hardware. This command runs as a shell command and passes the output to a URL and obtain the latest Linux version of the Docker Compose <br>
@@ -109,7 +121,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
    ```
    <img src="" width=800/>
     
- 7. Create a fourth play to add the EC2-user to the Docker group.
+ 6. Create a fourth play to add the EC2-user to the Docker group.
 
     <details><summary><strong>Reset connection</strong></summary>
       After adding the user to the Docker group, reset the connection so the changes take effect.
@@ -134,7 +146,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
     
     <img src="" width=800/>
  
- 12. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
+ 7. Create a fifth play to start Docker containers using the module: [Community.Docker.Docker_ image module](https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html)
 
      ```bash
        - name: Start Docker containers
@@ -162,18 +174,20 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
      ```
      <img src="" width=800/>
      
-14. Run the Ansible playbook.
+8. Run the Ansible playbook.
     ```bash
     ansible-playbook 
     ```
     <img src="" width=800/>
 
-15. Docker configured in EC2s
+9. Docker configured in EC2s
     
     <img src="" width=800/>
     
+
 ## Making the Project Reusable
 1. Add a play to create a new user, instead of using the ec2-user.
+   
    ```bash
      - name: Create new Linux user
     hosts: AWS_EC2_Docker_Server
@@ -187,7 +201,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
         name: "{{user_name}}"
         groups: "{{user_groups}}"
    ```
+  
 2. Modify the Docker Compose play to use the new user.
+   
    ```bash
        - name: Installing Docker-Compose
         hosts: AWS_EC2_Docker_Server
@@ -212,7 +228,9 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
               dest: ~/.docker/cli-plugins/docker-compose
               mode: +x
    ```
+  
 3. Modify the Start Docker containers play to start with the new user:
+   
    ```bash
        - name: Start Docker containers
         hosts: AWS_EC2_Docker_Server
@@ -242,9 +260,11 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 ---
 
 <a id="demo4"></a>
+
 # 📦Demo 4 – Ansible Integration in Terraform
+
 # 📌 Objective
-  Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning. Using the demo previous configuration.
+  Integrate Ansible into Terraform so Terraform automatically triggers Ansible playbooks after provisioning. Using the previous ansible configuration.
   
 # 🎯 Features
   ✅ End-to-end automation of infrastructure + configuration.<br>
@@ -253,18 +273,20 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
     
 # ⚙️ Project Configuration
 1. Use Terraform infrastructure from the previous demo.
-   available at: [Terraform Files](https://gitlab.com/devopsbootcamp4095512/devopsbootcamp_12_terraform_aws/-/tree/demo/ansible-terraform?ref_type=heads)
+   [Terraform Files](https://gitlab.com/devopsbootcamp4095512/devopsbootcamp_12_terraform_aws/-/tree/demo/ansible-terraform?ref_type=heads)
   
 2. Add a provisioner "local-exec" to run Ansible.
+   
    <details><summary><strong> Terraform Provisioners</strong></summary>
      * Invokes a local executable after a resource is created <br>
      * The local-exec is applied to the host running Terraform and not the remote server.
      * In this case, we need the local server to execute the Ansible command.
    </details>
+   
 3. Obtain the IP address of the EC2 dynamically and pass it to Ansible, using the inventory flag.
    
    <details><summary><strong> IP address dynamically to Ansible </strong></summary>
-     This is achieved using the --inventory flag when running the Ansible command. In this case, when we run ansible-playbook --inventory, we pass the EC2 instance IP address.
+     This is achieved using the --inventory flag when running the Ansible command. In this case, when running  ansible-playbook --inventory, we pass the EC2 instance IP address.
    </details>
    
 4. Obtain the private key location and user to pass them to Ansible, using private key and user flags.
@@ -276,7 +298,8 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
       }
    ```
 5. Use null_resource to separate the provisioner from the AWS instance resource.
-   details><summary><strong> null_resource </strong></summary>
+   
+   <details><summary><strong> null_resource </strong></summary>
      null_resource to have provisioners in a different task <br>
      triggers --> Decides when to trigger the null_resource. In this case, the null_resource is executed when triggers finds changes in the EC2 IP address. <br>
    </details>
@@ -295,10 +318,11 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
       }
    ```
    
-5. Switch to Ansible configuration.
+6. Switch to Ansible configuration.
    
-6. Modify the host from the docker_server group to ALL.
-7. Ensure that the EC2 instance is accessible.
+7. Modify the host from the docker_server group to ALL.
+   
+8. Ensure that the EC2 instance is accessible.
    ```bash
     #As we are executing Ansible from Terraform, we must ensure that the SSH connection is available before executing any command.
     - name: Wait for SSH connection
@@ -316,7 +340,7 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
             ansible_connection: local
             ansible_python_interpreter: /usr/bin/python3
    ```
-8. Switch to Terraform and apply the infrastructure.
+9. Switch to Terraform and apply the infrastructure.
    ```bash
      terraform init
      terraform plan
