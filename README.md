@@ -3,6 +3,7 @@ This exercise is part of Module 15 from the TWN DevOps Bootcamp. In Module 15, w
 
 <p align="left">
   <a href="#demo3">⚙️ Demo 3 - Ansible & Docker</a><br>
+  <br>
   <a href="#demo4">🚀 Demo 4 - Ansible integration in Terraform</a><br>
 </p>
 
