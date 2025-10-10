@@ -35,12 +35,11 @@ Use Terraform and Ansible to deploy Docker and Docker Compose on AWS EC2 instanc
 ## Terraform to deploy infrastructure
 1. Use the Terraform file from the Terraform module 1 and remove the bootstrap section.
    
-2. Initialize Terraform
-   
+2. Initialize Terraform  
    ```bash
-   terraform init
+     terraform init
    ```
-  < img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/1%20create%20infrastructur%20eusing%20terraform.PNG" width=800 />
+  <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_15_Ansible_AWS_Docker_Terraform/blob/main/Img/1%20create%20infrastructur%20eusing%20terraform.PNG" width=800 />
   
 3. Deploy AWS infrastructure using Terraform
    
